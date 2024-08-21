@@ -63,7 +63,7 @@ Step3) Build and Start BMT
     cmake --build .
     ```
 
-**4. Start builed BMT GUI**  
+**4. Setting Library Path for Executable in Current Directory**  
    - Run the following command to make the executable(SNU_BMT_GUI_Submitter) can reference the libraries located in the lib folder of the current directory.
      ```bash
      export LD_LIBRARY_PATH=$(pwd)/lib:$LD_LIBRARY_PATH
