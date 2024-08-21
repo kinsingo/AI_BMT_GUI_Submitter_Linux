@@ -8,10 +8,11 @@
    1) Open the Linux terminal  
   -. Open the terminal (shell)  
   -. Navigate to the build directory using the command: [cd build]
-   2) Generate the Ninja build system  
+   2) Generate the Ninja build system
+  -. If cmake is not installed, Run the command [sudo apt install cmake]  
   -. If ninja is not installed, Run the command [sudo apt-get install ninja-build]  
   -. Run the command [cmake -G "Ninja" ..] to execute CMake in the current directory (usually the build directory). This command will generate the Ninja build system based on the CMakeLists.txt file located in the parent directory. Once successfully executed, the project will be ready to be built using Ninja.
-   3) Build the project  
+   4) Build the project  
    : Run [cmake --build .] to build the project using the build system configured by CMake in the current directory. This will compile the project and create the executable SNU_BMT_GUI_Submitter.exe in the build folder.
 
 ## Build Example (Linux Terminal)
