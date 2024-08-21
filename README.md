@@ -42,8 +42,9 @@ Step3) Build and Start BMT
 
 ## Step3) Build and Start BMT
 **1. Open the Window terminal**  
-  - Navigate to the build directory using the following command
+  - Clone and navigate to the build directory using the following command
     ```bash
+    git clone https://github.com/kinsingo/SNU_BMT_GUI_Submitter_Linux.git
     cd SNU_BMT_GUI_Submitter_Windows\build
     ```
   
@@ -77,6 +78,7 @@ Step3) Build and Start BMT
 
 **build and start program example**
 ```bash
+sjh@DESKTOP-U7I9FQS:~$ git clone https://github.com/kinsingo/SNU_BMT_GUI_Submitter_Linux.git
 sjh@DESKTOP-U7I9FQS:~$ cd SNU_BMT_GUI_Submitter_Linux/build/
 sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ sudo apt install cmake
 sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ sudo apt install build-essential
