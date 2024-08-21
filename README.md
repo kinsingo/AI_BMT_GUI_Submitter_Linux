@@ -9,7 +9,8 @@
   -. Open the terminal (shell)  
   -. Navigate to the build directory using the command: [cd build]
    2) Generate the Ninja build system
-  -. If cmake is not installed, Run the command [sudo apt install cmake]  
+  -. If cmake is not installed, Run the command [sudo apt install cmake]
+  -. If g++ Compiler is not installed, Run the command [sudo apt install build-essential]
   -. If ninja is not installed, Run the command [sudo apt-get install ninja-build]  
   -. Run the command [cmake -G "Ninja" ..] to execute CMake in the current directory (usually the build directory). This command will generate the Ninja build system based on the CMakeLists.txt file located in the parent directory. Once successfully executed, the project will be ready to be built using Ninja.
    4) Build the project  
