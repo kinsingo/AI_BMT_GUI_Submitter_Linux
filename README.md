@@ -90,3 +90,18 @@ sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ export LD_LIBRARY_PATH=
 sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ ./SNU_BMT_GUI_Submitter
 ```
 
+**All commands for user convenience**
+```bash
+git clone https://github.com/kinsingo/SNU_BMT_GUI_Submitter_Linux.git
+cd SNU_BMT_GUI_Submitter_Linux/build/
+sudo apt install cmake
+sudo apt install build-essential
+sudo apt-get install ninja-build
+rm -rf CMakeCache.txt CMakeFiles
+cmake -G "Ninja" ..
+cmake --build .
+export LD_LIBRARY_PATH=$(pwd)/lib:$LD_LIBRARY_PATH
+./SNU_BMT_GUI_Submitter
+```
+
+
