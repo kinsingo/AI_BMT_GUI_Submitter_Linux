@@ -33,7 +33,7 @@ Step3) Build and Start BMT
   ```bash
   cmake --version
   gcc --version
-   ninja --version
+  ninja --version
   ```
 
 ## Step2) Interface Implementation
