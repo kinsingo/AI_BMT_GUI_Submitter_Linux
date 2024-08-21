@@ -11,8 +11,18 @@ set(PROJECT_SOURCES
 # Create the executable
 add_executable(SNU_BMT_GUI_Submitter ${PROJECT_SOURCES})
 
-# Add the directory where the libraries are located
+# Add the directory where the headers are located
 target_include_directories(SNU_BMT_GUI_Submitter PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # Link the libraries to the executable
-target_link_libraries(SNU_BMT_GUI_Submitter PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/lib/libSNU_AI_BMT_GUI_Library.so)
+target_link_libraries(SNU_BMT_GUI_Submitter PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/build/libSNU_AI_BMT_GUI_Library.so)
+
+# Set RPATH to include the lib directory during the build and install phases
+set_target_properties(SNU_BMT_GUI_Submitter PROPERTIES
+    BUILD_RPATH "${CMAKE_BINARY_DIR}/lib"
+    INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib"
+    INSTALL_RPATH_USE_LINK_PATH TRUE
+)
+
+# Ensure RPATH is always used (not stripped out)
+set(CMAKE_BUILD_WITH_INSTALL_RPATH TRUE)
