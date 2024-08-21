@@ -64,6 +64,12 @@ Step3) Build and Start BMT
     ```
 
 **4. Start builed BMT GUI**  
+   - Run the following command to make the executable(SNU_BMT_GUI_Submitter) can reference the libraries located in the lib folder of the current directory.
+     ```bash
+     export LD_LIBRARY_PATH=$(pwd)/lib:$LD_LIBRARY_PATH
+     ```
+
+**5. Start builed BMT GUI**  
    - Run the following command to build the project using the build system configured by CMake in the current directory. This will compile the project and create the executable SNU_BMT_GUI_Submitter.exe in the build folder.
      ```bash
      .\SNU_BMT_GUI_Submitter
