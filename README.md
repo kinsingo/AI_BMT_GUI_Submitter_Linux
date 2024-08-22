@@ -45,7 +45,7 @@ Step3) Build and Start BMT
   - Clone and navigate to the build directory using the following command
     ```bash
     git clone https://github.com/kinsingo/SNU_BMT_GUI_Submitter_Linux.git
-    cd SNU_BMT_GUI_Submitter_Windows\build
+    cd SNU_BMT_GUI_Submitter_Windows/build
     ```
   
 **2. Generate the Ninja build system using cmake**  
@@ -73,7 +73,7 @@ Step3) Build and Start BMT
 **5. Start builed BMT GUI**  
    - Run the following command to build the project using the build system configured by CMake in the current directory. This will compile the project and create the executable SNU_BMT_GUI_Submitter.exe in the build folder.
      ```bash
-     .\SNU_BMT_GUI_Submitter
+     ./SNU_BMT_GUI_Submitter
      ```
 
 **build and start program example**
