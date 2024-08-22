@@ -90,7 +90,7 @@ sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ export LD_LIBRARY_PATH=
 sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ ./SNU_BMT_GUI_Submitter
 ```
 
-**Run all commands at once**
+**Run all commands at once (For Initial Build)**
 ```bash
 git clone https://github.com/kinsingo/SNU_BMT_GUI_Submitter_Linux.git
 cd SNU_BMT_GUI_Submitter_Linux/build/
@@ -101,6 +101,14 @@ rm -rf CMakeCache.txt CMakeFiles
 cmake -G "Ninja" ..
 cmake --build .
 export LD_LIBRARY_PATH=$(pwd)/lib:$LD_LIBRARY_PATH
+./SNU_BMT_GUI_Submitter
+```
+
+**Run all commands at once (For Rebuild)**
+```bash
+rm -rf CMakeCache.txt CMakeFiles
+cmake -G "Ninja" ..
+cmake --build .
 ./SNU_BMT_GUI_Submitter
 ```
 
