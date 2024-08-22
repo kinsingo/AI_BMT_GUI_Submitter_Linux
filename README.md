@@ -41,7 +41,7 @@ Step3) Build and Start BMT
 : Ensure that these functions are implemented to operate correctly in the intended calculator (e.g., CPU, GPU, NPU).
 
 ## Step3) Build and Start BMT
-**1. Open the Window terminal**  
+**1. Open the Linux terminal(Shell)**  
   - Clone and navigate to the build directory using the following command
     ```bash
     git clone https://github.com/kinsingo/SNU_BMT_GUI_Submitter_Linux.git
