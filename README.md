@@ -4,37 +4,17 @@ Step2) Interface Implementation
 Step3) Build and Start BMT  
 
 ## Step 1) Build System Set-up (Installation Guide for Ubuntu)
-**1. Update Your Package List**  
-- Open a terminal and run the following command:
+**1. Install Packages**  
+- Open a terminal and run the following command to install CMake, g++ compiler, Ninja Build System, EGL Library:
    ```bash
    sudo apt update
+   sudo apt install cmake
+   sudo apt install build-essential
+   sudo apt-get install ninja-build
+   sudo apt-get install libegl1-mesa
    ```
-
-**2. Install CMake**  
-- To install CMake, use the following command:
-  ```bash
-  sudo apt install cmake
-  ```
-
-**3. Install g++ compiler**  
-- Install `build-essential` by running the following command:
-  ```bash
-  sudo apt install build-essential
-  ```
-
-**4. Install Ninja Build**  
-- To install Ninja, run the following command:
-  ```bash
-  sudo apt-get install ninja-build
-  ```
-
-**5. Install EGL Library**  
-- To install the EGL library, run the following command:
-  ```bash
-  sudo apt-get install libegl1-mesa
-  ```
-
-**6. Verify the Installation**  
+   
+**2. Verify the Installation**  
 - You can check the versions of the installed tools by running the following commands. If these commands return version information for each tool, the installation was successful.
   ```bash
   cmake --version
@@ -103,6 +83,7 @@ sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ ./SNU_BMT_GUI_Submitter
 ```bash
 git clone https://github.com/kinsingo/SNU_BMT_GUI_Submitter_Linux.git
 cd SNU_BMT_GUI_Submitter_Linux/build/
+sudo apt update
 sudo apt install cmake
 sudo apt install build-essential
 sudo apt-get install ninja-build
