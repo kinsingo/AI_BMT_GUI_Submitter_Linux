@@ -28,12 +28,19 @@ Step3) Build and Start BMT
   sudo apt-get install ninja-build
   ```
 
-**5. Verify the Installation**  
+**5. Install EGL Library**  
+- To install the EGL library, run the following command:
+  ```bash
+  sudo apt-get install libegl1-mesa
+  ```
+
+**6. Verify the Installation**  
 - You can check the versions of the installed tools by running the following commands. If these commands return version information for each tool, the installation was successful.
   ```bash
   cmake --version
   gcc --version
   ninja --version
+  dpkg -l | grep libegl1-mesa
   ```
 
 ## Step2) Interface Implementation
