@@ -5,7 +5,7 @@ Step3) Build and Start BMT
 
 ## Step 1) Build System Set-up (Installation Guide for Ubuntu)
 **1. Install Packages**  
-- Open a terminal and run the following command to install CMake, g++ compiler, Ninja Build System, and EGL Library.
+- Open a terminal and run the following commands to install CMake, g++ compiler, Ninja Build System, and EGL Library.
    ```bash
    sudo apt update
    sudo apt install cmake
