@@ -110,6 +110,7 @@ export LD_LIBRARY_PATH=$(pwd)/lib:$LD_LIBRARY_PATH
 rm -rf CMakeCache.txt CMakeFiles
 cmake -G "Ninja" ..
 cmake --build .
+export LD_LIBRARY_PATH=$(pwd)/lib:$LD_LIBRARY_PATH
 ./SNU_BMT_GUI_Submitter
 ```
 
