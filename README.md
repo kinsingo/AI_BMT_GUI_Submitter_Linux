@@ -75,6 +75,7 @@ Step3) Build and Start BMT
      ```bash
      ./SNU_BMT_GUI_Submitter
      ```
+   - When the GUI Popup, Cline [Start BMT] button to start AI Performance Analysis.
 
 **build and start program example**
 ```bash
