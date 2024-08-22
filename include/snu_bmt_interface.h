@@ -7,12 +7,16 @@
 #define EXPORT_SYMBOL
 #endif
 
+#include <iostream>
+using namespace std;
+
 class EXPORT_SYMBOL SNU_BMT_Interface
 {
 public:
-    virtual void process_A() = 0;
-    virtual void process_B() = 0;
-    virtual void process_C() = 0;
+    virtual ~SNU_BMT_Interface(){}
+    virtual bool requiresModelConversion() = 0;
+    virtual string convertModel(const string& model) = 0;
+    virtual string runInference(const string& model, const string& data) = 0;
 };
 
 #endif // SNU_BMT_INTERFACE_H
