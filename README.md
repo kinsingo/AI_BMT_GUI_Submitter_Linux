@@ -70,12 +70,12 @@ Step3) Build and Start BMT
      export LD_LIBRARY_PATH=$(pwd)/lib:$LD_LIBRARY_PATH
      ```
 
-**5. Start builed BMT GUI**  
-   - Run the following command to build the project using the build system configured by CMake in the current directory. This will compile the project and create the executable SNU_BMT_GUI_Submitter.exe in the build folder.
+**5. Start Performance Analysis**  
+   - Run the following command to start created excutable. When the GUI Popup, Click [Start BMT] button to start AI Performance Analysis.
      ```bash
      ./SNU_BMT_GUI_Submitter
      ```
-   - When the GUI Popup, Cline [Start BMT] button to start AI Performance Analysis.
+   
 
 **build and start program example**
 ```bash
