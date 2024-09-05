@@ -1,4 +1,4 @@
-## Submitter User Guide Steps (Ubuntu 20.04, 22.04, 24.04)
+## Submitter User Guide Steps (Tested on Ubuntu 20.04, 22.04, 24.04)
 Step1) Build System Set-up  
 Step2) Interface Implementation  
 Step3) Build and Start BMT  
