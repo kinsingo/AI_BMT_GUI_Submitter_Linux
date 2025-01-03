@@ -8,10 +8,11 @@ Step3) Build and Start BMT
 - Open a terminal and run the following commands to install CMake, g++ compiler, Ninja Build System, and EGL Library.
    ```bash
    sudo apt update
-   sudo apt install cmake
-   sudo apt install build-essential
-   sudo apt-get install ninja-build
-   sudo apt-get install libegl1-mesa
+   sudo apt install cmake              # CMake
+   sudo apt install build-essential    # GCC, G++, Make 
+   sudo apt-get install ninja-build    # Ninja
+   sudo apt-get install libegl1-mesa   # EGL and OpenGL
+   sudo apt install unzip              # unzip            
    ```
    
 **2. Verify the Installation**  
