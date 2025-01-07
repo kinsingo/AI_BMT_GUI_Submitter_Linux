@@ -13,5 +13,14 @@ build/.qtc_clangd/
 build/.qt/
 build/.cmake/
 
+# Qt related temporary or auto-generated folders within the build directory (customize as needed)
+build/translations/
+build/Testing/
+
 # Temporary or log files within the build directory
 build/*.log
+
+# Log & Model & Dataset (250106)
+build/Logs/
+build/Model/
+build/Dataset/

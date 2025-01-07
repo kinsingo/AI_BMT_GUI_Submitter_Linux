@@ -5,44 +5,70 @@
 #include <chrono>
 #include <random>
 
-using namespace std;
+using DataType = int*;
 
 class Virtual_Submitter_Implementation : public SNU_BMT_Interface
 {
 private:
-    void SleepForRandomMilliSeconds(const int& Min_ms, const int& Max_ms)
+    string model;
+    string LoadModel()
+        {
+            return "DeepX NPU model";
+        }
+public:
+    Virtual_Submitter_Implementation() 
     {
-        random_device rd;
-        mt19937 gen(rd());
-        uniform_int_distribution<> distr(Min_ms, Max_ms); // 5ms ~ 50ms »çÀÌÀÇ ·£´ı °ª
-        int delay = distr(gen); // ·£´ı Áö¿¬ ½Ã°£À» »ı¼ºÇÕ´Ï´Ù.
-        this_thread::sleep_for(chrono::milliseconds(delay)); // Áö¿¬ ½Ã°£À» Àû¿ëÇÕ´Ï´Ù.
+        model = LoadModel();
     }
 
-public:
-    bool requiresModelConversion() override
+    //ì œê³µí•œ ë°ì´í„°ì— ëŒ€í•´ì„œ, NPU ì—ì„œ ì›í•˜ëŠ” DataType ìœ¼ë¡œ ì—…ë°ì´íŠ¸
+    virtual VariantType convertToData(const string& imagePath) override
     {
-        cout << "requiresModelConversion() is called from a DeepX NPU submitter" <<endl;
-        return true;
+        DataType data = new int[200*200];
+        for(int i = 0;i<200*200;i++)
+            data[i]=i;
+        return data;
     }
-    string convertModel(const string &model) override
+
+    virtual vector<BMTReult> runInference(const vector<VariantType>& data) override
     {
-        cout << "convertModel(model) is called from a DeepX NPU submitter" <<endl;
-        return "Converted(" + model + ") from a DeepX NPU submitter";
-    }
-    string runInference(const string &model, const string &data) override
-    {
-        cout << "runInference(model,data) is called from a DeepX NPU submitter" <<endl;
-        const int Min_ms = 5;
-        const int Max_ms = 50;
-        SleepForRandomMilliSeconds(Min_ms,  Max_ms);
-        return "InferenceResult(" + model + ", " + data + ") a DeepX NPU submitter";
+        vector<BMTReult> batchResult;
+        const int batchSize = data.size();
+        for(int i =0;i<batchSize;i++)
+        {
+            BMTReult result;
+            int* realData;
+            try
+            {
+                realData = get<DataType>(data[i]);//Ok
+                //int a = realData[0];
+                //int b = realData[1];
+                //int c = realData[200 * 200 - 1];
+                //cout << "Data from index " << i << ": " << a << ", " << b << ", " << c << endl;
+
+            }
+            catch (const std::bad_variant_access& e)
+            {
+                // ì˜ëª»ëœ íƒ€ì… ì ‘ê·¼ ì²˜ë¦¬
+                std::cerr << "Error: bad_variant_access at index " << i << ". "
+                          << "Reason: " << e.what() << std::endl;
+                continue;
+            }
+
+            //ì—¬ê¸° ì´ì œ data ë¡œ image ë¶ˆëŸ¬ì™€ì„œ
+            //ì•„ë˜ Classification_ImageNet2012_PredictedIndex_0_to_999 ì‹¤ì œ ë„ì¶œí•˜ë„ë¡ êµ¬í˜„
+            result.Classification_ImageNet2012_PredictedIndex_0_to_999 = 500;//;i%1000; //ì„ì‹œê°’ í• ë‹¹
+            batchResult.push_back(result);
+        }
+        return batchResult;
     }
 };
 
 int main(int argc, char *argv[])
-{
+{    
     shared_ptr<SNU_BMT_Interface> interface = make_shared<Virtual_Submitter_Implementation>();
-    SNU_BMT_GUI_Caller caller(interface);
+    SNU_BMT_GUI_CALLER caller(interface);
     return caller.call_BMT_GUI(argc,argv);
 }
+
+
