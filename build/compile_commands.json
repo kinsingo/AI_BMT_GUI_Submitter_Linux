@@ -1,0 +1,7 @@
+[
+{
+  "directory": "/home/sjh/SNU_BMT_GUI_Submitter_Linux/build",
+  "command": "/usr/bin/c++  -I/home/sjh/SNU_BMT_GUI_Submitter_Linux/include -g -std=gnu++17 -o CMakeFiles/SNU_BMT_GUI_Submitter.dir/main.cpp.o -c /home/sjh/SNU_BMT_GUI_Submitter_Linux/main.cpp",
+  "file": "/home/sjh/SNU_BMT_GUI_Submitter_Linux/main.cpp"
+}
+]

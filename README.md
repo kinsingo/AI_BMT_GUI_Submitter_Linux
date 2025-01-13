@@ -1,7 +1,4 @@
-## 기억할 것
-  1) Ubuntu20.04 : /linuxdeployqt-continuous-x86_64.AppImage 실행 가능함, 그러나 22.04 에서는 시스템 호환으로 인해 linuxdeployqt-continuous-x86_64.AppImage 실행 불가
-  2) Ubuntu22.04 : QT Network 가 OpenSSL 3.0 이상만 지원, Ubuntu20.04 에서는 기본적으로 OpenSSL < 2.0 사용해서 네트워크 관련 기능 사용 불가
-  3) 즉, Dependency 관련 Ubuntu20.04 에서 파일 확보하고, 테스트는 Ubuntu22.04 에서 진행후에 정식 배포
+> **Last Updated:** 2025-01-13
 
 ## Submitter User Guide Steps (Tested on Ubuntu 22.04, 24.04)
 Step1) Build System Set-up  

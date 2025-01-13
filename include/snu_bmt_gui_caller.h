@@ -11,13 +11,13 @@ using namespace std;
 #define EXPORT_SYMBOL
 #endif
 
-//template 이기 때문에, header에 구현부 같이 포함해야함
 class EXPORT_SYMBOL SNU_BMT_GUI_CALLER
 {
 private:
     shared_ptr<SNU_BMT_Interface> interface;
+    string modelPath;
 public:
-    SNU_BMT_GUI_CALLER(shared_ptr<SNU_BMT_Interface> interface);
+    SNU_BMT_GUI_CALLER(shared_ptr<SNU_BMT_Interface> interface, string modelPath);
     int call_BMT_GUI(int argc, char *argv[]);
 };
 
