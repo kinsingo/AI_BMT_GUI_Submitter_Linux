@@ -13,7 +13,7 @@ Step3) Build and Start BMT
    sudo apt install cmake              # CMake
    sudo apt install build-essential    # GCC, G++, Make 
    sudo apt-get install ninja-build    # Ninja
-   sudo apt-get install libegl1-mesa   # EGL and OpenGL
+   sudo apt-get install libegl1   # EGL and OpenGL
    sudo apt install unzip              # unzip            
    ```
    
@@ -23,7 +23,7 @@ Step3) Build and Start BMT
   cmake --version
   gcc --version
   ninja --version
-  dpkg -l | grep libegl1-mesa
+  dpkg -l | grep libegl1
   ```
 
 ## Step2) Interface Implementation
