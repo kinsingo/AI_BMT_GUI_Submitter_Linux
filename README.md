@@ -10,11 +10,11 @@ Step3) Build and Start BMT
 - Open a terminal and run the following commands to install CMake, g++ compiler, Ninja Build System, and EGL Library.
    ```bash
    sudo apt update
-   sudo apt install cmake              # CMake
-   sudo apt install build-essential    # GCC, G++, Make 
-   sudo apt-get install ninja-build    # Ninja
-   sudo apt-get install libopengl0         # EGL and OpenGL
-   sudo apt install unzip              # unzip            
+   sudo apt install cmake                     # CMake
+   sudo apt install build-essential           # GCC, G++, Make 
+   sudo apt-get install ninja-build           # Ninja
+   sudo apt install libgl1 libgl1-mesa-dev    # EGL and OpenGL
+   sudo apt install unzip                     # unzip            
    ```
    
 **2. Verify the Installation**  
@@ -23,7 +23,7 @@ Step3) Build and Start BMT
   cmake --version
   gcc --version
   ninja --version
-  dpkg -l | grep libopengl0
+  dpkg -l | grep -E 'libgl1|libgl1-mesa-dev'
   ```
 
 ## Step2) Interface Implementation
@@ -74,7 +74,7 @@ sjh@DESKTOP-U7I9FQS:~$ cd SNU_BMT_GUI_Submitter_Linux/build/
 sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ sudo apt install cmake
 sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ sudo apt install build-essential
 sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ sudo apt-get install ninja-build
-sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ sudo apt-get install libopengl0
+sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ sudo apt-get install libgl1 libgl1-mesa-dev
 sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ sudo sudo apt install unzip
 sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ rm -rf CMakeCache.txt CMakeFiles
 sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ cmake -G "Ninja" ..
@@ -91,7 +91,7 @@ sudo apt update
 sudo apt install cmake
 sudo apt install build-essential
 sudo apt-get install ninja-build
-sudo apt-get install libopengl0
+sudo apt-get install libgl1 libgl1-mesa-dev
 sudo apt install unzip
 rm -rf CMakeCache.txt CMakeFiles
 cmake -G "Ninja" ..
