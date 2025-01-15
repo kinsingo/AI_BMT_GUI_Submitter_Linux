@@ -13,7 +13,7 @@ Step3) Build and Start BMT
    sudo apt install cmake              # CMake
    sudo apt install build-essential    # GCC, G++, Make 
    sudo apt-get install ninja-build    # Ninja
-   sudo apt-get install libegl1        # EGL and OpenGL
+   sudo apt-get install libopengl0         # EGL and OpenGL
    sudo apt install unzip              # unzip            
    ```
    
@@ -23,7 +23,7 @@ Step3) Build and Start BMT
   cmake --version
   gcc --version
   ninja --version
-  dpkg -l | grep libegl1
+  dpkg -l | grep libopengl0
   ```
 
 ## Step2) Interface Implementation
@@ -74,7 +74,7 @@ sjh@DESKTOP-U7I9FQS:~$ cd SNU_BMT_GUI_Submitter_Linux/build/
 sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ sudo apt install cmake
 sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ sudo apt install build-essential
 sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ sudo apt-get install ninja-build
-sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ sudo apt-get install libegl1
+sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ sudo apt-get install libopengl0
 sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ sudo sudo apt install unzip
 sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ rm -rf CMakeCache.txt CMakeFiles
 sjh@DESKTOP-U7I9FQS:~/SNU_BMT_GUI_Submitter_Linux/build$ cmake -G "Ninja" ..
@@ -91,7 +91,7 @@ sudo apt update
 sudo apt install cmake
 sudo apt install build-essential
 sudo apt-get install ninja-build
-sudo apt-get install libegl1
+sudo apt-get install libopengl0
 sudo apt install unzip
 rm -rf CMakeCache.txt CMakeFiles
 cmake -G "Ninja" ..
