@@ -10,16 +10,23 @@
 #include <iostream>
 #include <variant>
 #include <cstdint>//To ensure the Submitter side recognizes the uint8_t type in VariantType, this header must be included.
+#include "label_type.h"
 
 using namespace std;
 
 // Represents the result of the inference process for a single batch.
 // Fields:
 // - Classification_ImageNet2012_PredictedIndex_0_to_999: An integer representing the predicted class index (0-999) for the ImageNet dataset.
-struct EXPORT_SYMBOL BMTReult
+struct EXPORT_SYMBOL BMTResult
 {
-    int Classification_ImageNet2012_PredictedIndex_0_to_999;
+    // While conducting Classification BMT, if the value is not between 0 and 999, it indicates that the result has not been updated and will be treated as an error.
+    int Classification_ImageNet2012_PredictedIndex_0_to_999 = -1;
+
+    // While conducting Object Detection BMT
+    vector<Coco17DetectionResult> objectDetectionResult;
 };
+
+
 
 // Stores optional system configuration data provided by the Submitter.
 // These details will be uploaded to the database along with the performance data.
@@ -30,11 +37,17 @@ struct EXPORT_SYMBOL Optional_Data
 };
 
 
+
 // A variant can store and manage values only from a fixed set of types determined at compile time.
 // Since variant manages types statically, it can be used with minimal runtime type-checking overhead.
 // std::get<DataType>(variant) checks if the requested type matches the stored type and returns the value if they match.
-using VariantType = variant<uint8_t*, int*, float*, // Define variant pointer types
-                            vector<uint8_t>, vector<int>, vector<float>>; // Define variant vector types
+using VariantType = variant<uint8_t*, uint16_t*, uint32_t*,
+                            int8_t*,int16_t*,int32_t*,
+                            float*, // Define variant pointer types
+                            vector<uint8_t>, vector<uint16_t>, vector<uint32_t>,
+                            vector<int8_t>, vector<int16_t>, vector<int32_t>,
+                            vector<float>>; // Define variant vector types
+
 
 class EXPORT_SYMBOL SNU_BMT_Interface
 {
@@ -58,11 +71,13 @@ public:
    // The Initialize function is guaranteed to be called before convertToData and runInference are executed.
    virtual void Initialize() = 0;
 
-   // Perform preprocessing and convert to the desired data type required by the AI Processing Unit.
-   virtual VariantType convertToData(const string& imagePath) = 0;
+   // Performs preprocessing before AI inference to convert data into the format required by the AI Processing Unit.
+   // This method prepares model input data and is excluded from latency/throughput performance measurements.
+   // The converted data is loaded into RAM prior to invoking the runInference(..) method.
+   virtual VariantType convertToPreprocessedDataForInference(const string& imagePath) = 0;
 
    // Returns the final BMTResult value of the batch required for performance evaluation in the App.
-   virtual vector<BMTReult> runInference(const vector<VariantType>& data) = 0;
+   virtual vector<BMTResult> runInference(const vector<VariantType>& data) = 0;
 };
 
 #endif // SNU_BMT_INTERFACE_H
