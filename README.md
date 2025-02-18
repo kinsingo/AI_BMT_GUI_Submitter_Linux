@@ -1,6 +1,6 @@
 > **Last Updated:** 2025-02-10
 ## Environment
- 1. Architecture : AMD64(x86_64)
+ 1. ISA(Instruction Set Architecture) : AMD64(x86_64)
  2. OS : Ubuntu 22.04, 24.04
 
 ## Submitter User Guide Steps
