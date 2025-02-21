@@ -1,7 +1,7 @@
 > **Last Updated:** 2025-02-10
 ## Environment
  1. ISA(Instruction Set Architecture) : AMD64(x86_64)
- 2. OS : Ubuntu 22.04, 24.04
+ 2. OS : Ubuntu 22.04 LTS, 24.04 LTS
 
 ## Submitter User Guide Steps
 Step1) Build System Set-up  
