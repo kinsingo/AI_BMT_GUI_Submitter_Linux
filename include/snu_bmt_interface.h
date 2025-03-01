@@ -1,6 +1,7 @@
 #ifndef SNU_BMT_INTERFACE_H
 #define SNU_BMT_INTERFACE_H
 
+#include <iterator>
 #ifdef _WIN32 //(.dll)
 #define EXPORT_SYMBOL __declspec(dllexport)
 #else //Linux(.so) and other operating systems
@@ -26,17 +27,21 @@ struct EXPORT_SYMBOL BMTResult
     vector<Coco17DetectionResult> objectDetectionResult;
 };
 
-
-
 // Stores optional system configuration data provided by the Submitter.
 // These details will be uploaded to the database along with the performance data.
 struct EXPORT_SYMBOL Optional_Data
 {
-    string CPU_Type;
-    string Accelerator_Type;
+    string cpu_type; // e.g., Intel i7-9750HF
+    string accelerator_type; // e.g., DeepX M1(NPU)
+    string submitter; // e.g., DeepX
+    string cpu_core_count; // e.g., 16
+    string cpu_ram_capacity; // e.g., 32GB
+    string cooling; // e.g., Air, Liquid, Passive
+    string cooling_option; // e.g., Active, Passive (Active = with fan/pump, Passive = without fan)
+    string cpu_accelerator_interconnect_interface; // e.g., PCIe Gen5 x16
+    string benchmark_model; // e.g., ResNet-50
+    string operating_system; // e.g., Ubuntu 20.04.5 LTS
 };
-
-
 
 // A variant can store and manage values only from a fixed set of types determined at compile time.
 // Since variant manages types statically, it can be used with minimal runtime type-checking overhead.
@@ -47,7 +52,6 @@ using VariantType = variant<uint8_t*, uint16_t*, uint32_t*,
                             vector<uint8_t>, vector<uint16_t>, vector<uint32_t>,
                             vector<int8_t>, vector<int16_t>, vector<int32_t>,
                             vector<float>>; // Define variant vector types
-
 
 class EXPORT_SYMBOL SNU_BMT_Interface
 {
@@ -61,8 +65,16 @@ public:
    virtual Optional_Data getOptionalData()
    {
        Optional_Data data;
-       data.CPU_Type = "";
-       data.Accelerator_Type = "";
+       data.cpu_type = ""; // e.g., Intel i7-9750HF
+       data.accelerator_type = ""; // e.g., DeepX M1(NPU)
+       data.submitter = ""; // e.g., DeepX
+       data.cpu_core_count = ""; // e.g., 16
+       data.cpu_ram_capacity = ""; // e.g., 32GB
+       data.cooling = ""; // e.g., Air, Liquid, Passive
+       data.cooling_option = ""; // e.g., Active, Passive (Active = with fan/pump, Passive = without fan)
+       data.cpu_accelerator_interconnect_interface = ""; // e.g., PCIe Gen5 x16
+       data.benchmark_model = ""; // e.g., ResNet-50
+       data.operating_system = ""; // e.g., Ubuntu 20.04.5 LTS
        return data;
    }
 

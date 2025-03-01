@@ -1,0 +1,5 @@
+QMAKE_PRL_TARGET = libQt6DesignerComponents.so
+QMAKE_PRL_CONFIG = shared
+QMAKE_PRL_VERSION = 6.7.3
+QMAKE_PRL_LIBS = $$[QT_INSTALL_LIBS]/libQt6Designer.so $$[QT_INSTALL_LIBS]/libQt6OpenGLWidgets.so $$[QT_INSTALL_LIBS]/libQt6OpenGL.so -lxkbcommon $$[QT_INSTALL_LIBS]/libQt6Widgets.so $$[QT_INSTALL_LIBS]/libQt6Gui.so -lGL $$[QT_INSTALL_LIBS]/libQt6Xml.so $$[QT_INSTALL_LIBS]/libQt6Core.so -pthread
+QMAKE_PRL_LIBS_FOR_CMAKE = $$[QT_INSTALL_LIBS]/libQt6Designer.so;$$[QT_INSTALL_LIBS]/libQt6OpenGLWidgets.so;$$[QT_INSTALL_LIBS]/libQt6OpenGL.so;-lxkbcommon;$$[QT_INSTALL_LIBS]/libQt6Widgets.so;$$[QT_INSTALL_LIBS]/libQt6Gui.so;-lGL;$$[QT_INSTALL_LIBS]/libQt6Xml.so;$$[QT_INSTALL_LIBS]/libQt6Core.so;-pthread

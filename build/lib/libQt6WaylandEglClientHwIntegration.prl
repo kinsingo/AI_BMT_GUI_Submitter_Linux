@@ -1,0 +1,5 @@
+QMAKE_PRL_TARGET = libQt6WaylandEglClientHwIntegration.so
+QMAKE_PRL_CONFIG = shared
+QMAKE_PRL_VERSION = 6.7.3
+QMAKE_PRL_LIBS = -ldl -lEGL $$[QT_INSTALL_LIBS]/libQt6OpenGL.so -lxkbcommon $$[QT_INSTALL_LIBS]/libQt6WaylandClient.so $$[QT_INSTALL_LIBS]/libQt6Gui.so $$[QT_INSTALL_LIBS]/libQt6Core.so -pthread -lGL -lwayland-cursor -lwayland-egl -lwayland-client
+QMAKE_PRL_LIBS_FOR_CMAKE = -ldl;-lEGL;$$[QT_INSTALL_LIBS]/libQt6OpenGL.so;-lxkbcommon;$$[QT_INSTALL_LIBS]/libQt6WaylandClient.so;$$[QT_INSTALL_LIBS]/libQt6Gui.so;$$[QT_INSTALL_LIBS]/libQt6Core.so;-pthread;-lGL;-lwayland-cursor;-lwayland-egl;-lwayland-client

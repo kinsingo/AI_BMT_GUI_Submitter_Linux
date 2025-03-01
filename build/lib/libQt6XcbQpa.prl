@@ -1,0 +1,5 @@
+QMAKE_PRL_TARGET = libQt6XcbQpa.so
+QMAKE_PRL_CONFIG = shared
+QMAKE_PRL_VERSION = 6.7.3
+QMAKE_PRL_LIBS = -lxkbcommon-x11 -lxkbcommon $$[QT_INSTALL_LIBS]/libQt6Core.so $$[QT_INSTALL_LIBS]/libQt6Gui.so $$[QT_INSTALL_LIBS]/libQt6Core.so -lpthread -lGL -lxcb-cursor -lxcb-icccm -lxcb-image -lxcb-keysyms -lxcb-randr -lxcb-render-util -lxcb-shm -lxcb-sync -lxcb-xfixes -lxcb-render -lxcb-shape -lxcb-xkb -lxcb -lxkbcommon -lX11-xcb -lX11 -ldl
+QMAKE_PRL_LIBS_FOR_CMAKE = -lxkbcommon-x11;-lxkbcommon;$$[QT_INSTALL_LIBS]/libQt6Core.so;$$[QT_INSTALL_LIBS]/libQt6Gui.so;$$[QT_INSTALL_LIBS]/libQt6Core.so;-lpthread;-lGL;-lxcb-cursor;-lxcb-icccm;-lxcb-image;-lxcb-keysyms;-lxcb-randr;-lxcb-render-util;-lxcb-shm;-lxcb-sync;-lxcb-xfixes;-lxcb-render;-lxcb-shape;-lxcb-xkb;-lxcb;-lxkbcommon;-lX11-xcb;-lX11;-ldl
