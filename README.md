@@ -39,6 +39,8 @@ Step3) Build and Start BMT
 
 - Implement the overridden functions in the `Virtual_Submitter_Implementation` class within `main.cpp`  
   : Ensure that these functions are implemented to operate correctly in the intended calculator (e.g., CPU, GPU, NPU).
+  
+![SNU_BMT_Interface_Diagram](https://github.com/user-attachments/assets/64220391-108a-47ef-b327-65fe3ce7ca26)
 
 ## Step3) Build and Start BMT
 
