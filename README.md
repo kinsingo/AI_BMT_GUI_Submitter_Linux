@@ -2,7 +2,7 @@
 
 ## Environment
 1.  ISA(Instruction Set Architecture) : x86_64(AMD64)
-2.  OS : Ubuntu 22.04 LTS, 24.04 LTS
+2.  OS : Ubuntu 22.04, 24.04 LTS
 
 ## Submitter User Guide Steps
 Step1) Build System Set-up  
@@ -43,16 +43,19 @@ Step3) Build and Start BMT
 #include "label_type.h"
 using namespace std;
 
-// Represents the result of the inference process for a single batch.
-// Fields:
-// - Classification_ImageNet2012_PredictedIndex_0_to_999: An integer representing the predicted class index (0-999) for the ImageNet dataset.
+// Represents the result of the inference process for a single query.
 struct EXPORT_SYMBOL BMTResult
 {
-    // While conducting Classification BMT, if the value is not between 0 and 999, it indicates that the result has not been updated and will be treated as an error.
-    int Classification_ImageNet2012_PredictedIndex_0_to_999 = -1;
+    // Output scores for 1000 ImageNet classes from the classification model.
+    // Each element represents the probability or confidence score for a class.
+    // Total size must be exactly 1,000 elements.
+    vector<float> classProbabilities;
 
-    // While conducting Object Detection BMT
-    vector<Coco17DetectionResult> objectDetectionResult;
+    // Output tensor from object detection model.
+    // The vector stores raw model outputs for 25200 detection candidates.
+    // Each candidate includes 85 values: [x, y, w, h, objectness, 80 class scores].
+    // Total size must be exactly 25200 * 85 = 2,142,000 elements.
+    vector<float> objectDetectionResult;
 };
 
 // Stores optional system configuration data provided by the Submitter.
@@ -81,10 +84,10 @@ using VariantType = variant<uint8_t*, uint16_t*, uint32_t*,
                             vector<int8_t>, vector<int16_t>, vector<int32_t>,
                             vector<float>>; // Define variant vector types
 
-class EXPORT_SYMBOL SNU_BMT_Interface
+class EXPORT_SYMBOL AI_BMT_Interface
 {
 public:
-   virtual ~SNU_BMT_Interface(){}
+   virtual ~AI_BMT_Interface(){}
 
    // This is not mandatory but can be implemented if needed.
    // The virtual function getOptionalData() returns an Optional_Data object,
@@ -109,19 +112,20 @@ public:
    // It is recommended to use this instead of a constructor,
    // as it allows handling additional errors that cannot be managed within the constructor.
    // The Initialize function is guaranteed to be called before convertToData and runInference are executed.
-   virtual void Initialize() = 0;
+   // The submitter can load the model using the provided modelPath
+   virtual void Initialize(string modelPath) = 0;
 
    // Performs preprocessing before AI inference to convert data into the format required by the AI Processing Unit.
-   // This method prepares model input data and is excluded from latency/throughput performance measurements.
+   // This method prepares model input data and is excluded from latency and throughput performance measurements.
    // The converted data is loaded into RAM prior to invoking the runInference(..) method.
    virtual VariantType convertToPreprocessedDataForInference(const string& imagePath) = 0;
 
-   // Returns the final BMTResult value of the batch required for performance evaluation in the App.
+   // Returns the final BMTResult value of the query required for performance evaluation in the App.
    virtual vector<BMTResult> runInference(const vector<VariantType>& data) = 0;
 };
-#endif // SNU_BMT_INTERFACE_H
-```
 
+#endif // AI_BMT_INTERFACE_H
+```
 
 ## Step3) Build and Start BMT
 
@@ -176,19 +180,19 @@ sudo apt install build-essential
 sudo apt-get install ninja-build
 sudo apt-get install libgl1 libgl1-mesa-dev
 sudo apt install unzip
-rm -rf CMakeCache.txt CMakeFiles SNU_BMT_GUI_Submitter
+rm -rf CMakeCache.txt CMakeFiles AI_BMT_GUI_Submitter
 cmake -G "Ninja" ..
 cmake --build .
 export LD_LIBRARY_PATH=$(pwd)/lib:$LD_LIBRARY_PATH
-./SNU_BMT_GUI_Submitter
+./AI_BMT_GUI_Submitter
 ```
 
 **Run all commands at once (For Rebuild)**
 
 ```bash
-rm -rf CMakeCache.txt CMakeFiles SNU_BMT_GUI_Submitter
+rm -rf CMakeCache.txt CMakeFiles AI_BMT_GUI_Submitter
 cmake -G "Ninja" ..
 cmake --build .
 export LD_LIBRARY_PATH=$(pwd)/lib:$LD_LIBRARY_PATH
-./SNU_BMT_GUI_Submitter
+./AI_BMT_GUI_Submitter
 ```
