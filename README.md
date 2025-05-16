@@ -1,4 +1,4 @@
-> **Last Updated:** 2025-02-28
+> **Last Updated:** 2025-05-16
 
 ## Environment
 1.  ISA(Instruction Set Architecture) : x86_64(AMD64)
@@ -32,14 +32,14 @@ Step3) Build and Start BMT
   ```
 
 ## Step2) Interface Implementation
-- Implement the overridden functions in the `Virtual_Submitter_Implementation` class, which inherits from the `SNU_BMT_Interface` interface, within `main.cpp`.
+- Implement the overridden functions in the `Virtual_Submitter_Implementation` class, which inherits from the `AI_BMT_Interface` interface, within `main.cpp`.
 - Ensure that these functions operate correctly on the intended computing unit (e.g., CPU, GPU, NPU).
   
 ![SNU_BMT_Interface_Diagram](https://github.com/user-attachments/assets/64220391-108a-47ef-b327-65fe3ce7ca26)
 
 ```cpp
-#ifndef SNU_BMT_INTERFACE_H
-#define SNU_BMT_INTERFACE_H
+#ifndef AI_BMT_INTERFACE_H
+#define AI_BMT_INTERFACE_H
 #include "label_type.h"
 using namespace std;
 
@@ -141,7 +141,7 @@ public:
 
 - Run the following command to remove existing cache
   ```bash
-  rm -rf CMakeCache.txt CMakeFiles SNU_BMT_GUI_Submitter
+  rm -rf CMakeCache.txt CMakeFiles AI_BMT_GUI_Submitter
   ```
 - Run the following command to execute CMake in the current directory (usually the build directory). This command will generate the Ninja build system based on the CMakeLists.txt file located in the parent directory. Once successfully executed, the project will be ready to be built using Ninja.
   ```bash
@@ -150,14 +150,14 @@ public:
 
 **3. Build the project**
 
-- Run the following command to build the project using the build system configured by CMake in the current directory. This will compile the project and create the executable SNU_BMT_GUI_Submitter.exe in the build folder.
+- Run the following command to build the project using the build system configured by CMake in the current directory. This will compile the project and create the executable AI_BMT_GUI_Submitter.exe in the build folder.
   ```bash
   cmake --build .
   ```
 
 **4. Setting Library Path for Executable in Current Directory**
 
-- Run the following command to make the executable(SNU_BMT_GUI_Submitter) can reference the libraries located in the lib folder of the current directory.
+- Run the following command to make the executable(AI_BMT_GUI_Submitter) can reference the libraries located in the lib folder of the current directory.
   ```bash
   export LD_LIBRARY_PATH=$(pwd)/lib:$LD_LIBRARY_PATH
   ```
@@ -166,7 +166,7 @@ public:
 
 - Run the following command to start created excutable. When the GUI Popup, Click [Start BMT] button to start AI Performance Analysis.
   ```bash
-  ./SNU_BMT_GUI_Submitter
+  ./AI_BMT_GUI_Submitter
   ```
 
 **Run all commands at once (For Initial Build)**
