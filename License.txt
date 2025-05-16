@@ -1,0 +1,64 @@
+
+Our platform provides the following datasets and models for evaluation purposes.
+
+────────────────────────────────────────────────────────────
+1. ImageNetV2 (Preprocessed Version)
+────────────────────────────────────────────────────────────
+• Source: https://github.com/modestyachts/ImageNetV2
+• Original License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+• Modifications: Images have been resized to 232×232 and center-cropped to 224×224.
+• Redistribution: This preprocessed version is redistributed by our platform under the same CC BY 4.0 license.
+• You are free to:
+   - Share — copy and redistribute the material in any medium or format
+   - Adapt — remix, transform, and build upon the material
+  Under the following terms:
+   - Attribution — You must give appropriate credit, provide a link to the license, and indicate that changes were made.
+• License Text: https://creativecommons.org/licenses/by/4.0
+
+Please cite the original dataset creators as follows:
+> ImageNetV2: https://github.com/modestyachts/ImageNetV2
+> Recht, B. et al., “Do ImageNet Classifiers Generalize to ImageNet?” ICML 2019.
+
+────────────────────────────────────────────────────────────
+2. COCO 2017
+────────────────────────────────────────────────────────────
+• Source: https://cocodataset.org/#download
+• License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+  You are free to:
+   - Share and adapt the material for any purpose, even commercially
+  Under the following terms:
+   - Attribution — You must give appropriate credit and indicate if changes were made.
+• License Text: https://creativecommons.org/licenses/by/4.0
+
+────────────────────────────────────────────────────────────
+3. Torchvision Models (Classification)
+────────────────────────────────────────────────────────────
+• Source: https://github.com/pytorch/vision
+• License: BSD 3-Clause License
+• Redistribution: Permitted, including in commercial products
+
+Key Requirements:
+- Include copyright notice
+- Include BSD 3-Clause license text
+- Do not use the name of contributors to promote derived products
+
+Copyright (c) Soumith Chintala, Facebook AI Research
+See full license text at: https://github.com/pytorch/vision/blob/main/LICENSE
+
+────────────────────────────────────────────────────────────
+4. Ultralytics YOLOv5–YOLOv12 Models (Object Detection)
+────────────────────────────────────────────────────────────
+• Source: https://github.com/ultralytics/ultralytics
+• License: GNU Affero General Public License v3.0 (AGPLv3)
+
+You are free to:
+- Use, modify, and redistribute the models
+- If the model is served via a network (e.g., web app or API), you must also provide access to the source code of the served application or include a clear license notice
+
+For more details, see: https://github.com/ultralytics/ultralytics/blob/main/LICENSE
+
+────────────────────────────────────────────────────────────
+Redistribution Notice
+────────────────────────────────────────────────────────────
+All datasets and models redistributed or served by this platform comply with their respective licenses.
+If you use any provided model or dataset, you must follow the attribution, redistribution, and licensing terms outlined above.
