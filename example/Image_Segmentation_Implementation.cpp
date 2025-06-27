@@ -25,7 +25,7 @@ using namespace Ort;
 using BMTDataType = vector<float>;
 
 // To view detailed information on what and how to implement for "AI_BMT_Interface," navigate to its definition (e.g., in Visual Studio/VSCode: Press F12).
-class ImageClassification_Interface_Implementation : public AI_BMT_Interface
+class ImageSegmentation_Interface_Implementation : public AI_BMT_Interface
 {
 private:
     Env env;
@@ -111,8 +111,8 @@ public:
         vector<BMTResult> results;
 
         //onnx option setting
-        const array<int64_t, 4> inputShape = { 1, 3, 224, 224 };
-        const array<int64_t, 2> outputShape = { 1, 1000 };
+        const vector<int64_t> input_dims = { 1, 3, 520, 520 };
+        const vector<int64_t> output_shape = { 1, 21, 520, 520 };
 
         for (int i = 0; i < querySize; ++i) {
             // Prepare input/output tensors
@@ -124,37 +124,39 @@ public:
                 cerr << "Error: bad_variant_access at index " << i << ". Reason: " << e.what() << endl;
                 continue;
             }
-            vector<float> outputData(1000);
-            auto inputTensor = Ort::Value::CreateTensor<float>(memory_info, imageVec.data(), imageVec.size(), inputShape.data(), inputShape.size());
-            auto outputTensor = Ort::Value::CreateTensor<float>(memory_info, outputData.data(), outputData.size(), outputShape.data(), outputShape.size());
 
-            // Run inference
-            session->Run(runOptions, inputNames.data(), &inputTensor, 1, outputNames.data(), &outputTensor, 1);
+            vector<float> output_data(output_shape[1] * output_shape[2] * output_shape[3]);
+            auto input_tensor = Ort::Value::CreateTensor<float>(
+                memory_info, imageVec.data(), imageVec.size(), input_dims.data(), input_dims.size());
+
+            auto output_tensor = Ort::Value::CreateTensor<float>(
+                memory_info, output_data.data(), output_data.size(),
+                output_shape.data(), output_shape.size());
+
+            session->Run(runOptions, inputNames.data(), &input_tensor, 1, outputNames.data(), &output_tensor, 1);
 
             // Update results
             BMTResult result;
-            result.classProbabilities = outputData;
+            result.segmentationResult = output_data;
             results.push_back(result);
         }
-
         return results;
     }
 };
 
-/*
-int main(int argc, char* argv[])
-{
-    filesystem::path exePath = filesystem::absolute(argv[0]).parent_path();// Get the current executable file path
-    filesystem::path model_path = exePath / "Model" / "Classification" / "resnet50_opset10.onnx";
-    string modelPath = model_path.string();
-    try
-    {
-        shared_ptr<AI_BMT_Interface> interface = make_shared<ImageClassification_Interface_Implementation>();
-        AI_BMT_GUI_CALLER caller(interface, modelPath);
-        return caller.call_BMT_GUI(argc, argv);
-    }
-    catch (const exception& ex)
-    {
-        cout << ex.what() << endl;
-    }
-}*/
+//int main(int argc, char* argv[])
+//{
+//    filesystem::path exePath = filesystem::absolute(argv[0]).parent_path();// Get the current executable file path
+//    filesystem::path model_path = exePath / "Model" / "Segmentation" / "deeplabv3_mobilenet_v3_large_opset12.onnx";
+//    string modelPath = model_path.string();
+//    try
+//    {
+//        shared_ptr<AI_BMT_Interface> interface = make_shared<ImageSegmentation_Interface_Implementation>();
+//        AI_BMT_GUI_CALLER caller(interface, modelPath);
+//        return caller.call_BMT_GUI(argc, argv);
+//    }
+//    catch (const exception& ex)
+//    {
+//        cout << ex.what() << endl;
+//    }
+//}

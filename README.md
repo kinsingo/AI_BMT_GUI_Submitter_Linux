@@ -1,8 +1,8 @@
-> **Last Updated:** 2025-05-16
+> **Last Updated:** 2025-06-26 — Semantic Segmentation is now supported (example code included)
 
 ## Environment
-1.  ISA(Instruction Set Architecture) : x86_64(AMD64)
-2.  OS : Ubuntu 22.04, 24.04 LTS
+1.  ISA(Instruction Set Architecture) : AMD64(x86_64)
+2.  OS : Ubuntu 24.04 LTS
 
 ## Submitter User Guide Steps
 Step1) Build System Set-up  

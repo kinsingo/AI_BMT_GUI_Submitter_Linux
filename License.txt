@@ -58,6 +58,53 @@ You are free to:
 For more details, see: https://github.com/ultralytics/ultralytics/blob/main/LICENSE
 
 ────────────────────────────────────────────────────────────
+5. PASCAL VOC 2012
+────────────────────────────────────────────────────────────
+• Source: http://host.robots.ox.ac.uk/pascal/VOC/voc2012/
+• License: Creative Commons Attribution 4.0 International (CC BY 4.0)
+• License Text: https://creativecommons.org/licenses/by/4.0/
+
+• You are free to:
+   - Share — copy and redistribute the material in any medium or format
+   - Adapt — remix, transform, and build upon the material
+• Under the following terms:
+   - Attribution — You must give appropriate credit and indicate if changes were made.
+
+Please cite the original authors as follows:
+> Everingham, M. et al., “The PASCAL Visual Object Classes (VOC) Challenge,” IJCV 2010.
+
+────────────────────────────────────────────────────────────
+6. Qt Framework (Community Edition)
+────────────────────────────────────────────────────────────
+• Source: https://www.qt.io/download-open-source
+• License: GNU Lesser General Public License (LGPL) v3.0 or v2.1 (depending on module)
+• License Text:
+   - LGPL v3: https://www.gnu.org/licenses/lgpl-3.0.html
+   - LGPL v2.1: https://www.gnu.org/licenses/old-licenses/lgpl-2.1.html
+
+Key Requirements:
+- If dynamically linking, no code disclosure is required.
+- You must allow the end user to replace or relink the Qt libraries.
+- You must include a copy of the license and state that Qt is used under LGPL.
+
+© The Qt Company Ltd and other contributors. See https://doc.qt.io/qt-6/licenses.html for full details.
+
+────────────────────────────────────────────────────────────
+7. pybind11
+────────────────────────────────────────────────────────────
+• Source: https://github.com/pybind/pybind11
+• License: BSD 2-Clause License
+
+Key Requirements:
+- You may use, modify, and redistribute the code freely.
+- You must retain the copyright notice.
+- You must include the license text in redistributed binaries or source code.
+
+Copyright (c) 2015 Wenzel Jakob
+
+Full license text: https://github.com/pybind/pybind11/blob/master/LICENSE
+
+────────────────────────────────────────────────────────────
 Redistribution Notice
 ────────────────────────────────────────────────────────────
 All datasets and models redistributed or served by this platform comply with their respective licenses.

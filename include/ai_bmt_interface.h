@@ -28,6 +28,11 @@ struct EXPORT_SYMBOL BMTResult
     // Each candidate includes 85 values: [x, y, w, h, objectness, 80 class scores].
     // Total size must be exactly 25200 * 85 = 2,142,000 elements.
     vector<float> objectDetectionResult;
+
+    // Output tensor from emantic segmentation model.
+    // Each value represents the score (e.g., logits or probabilities) of a class at a specific pixel location..
+    // Total size must be exactly 21(Classes) x 520(Height) x 520(Width) = 5,678,400 elements.
+    vector<float> segmentationResult;
 };
 
 // Stores optional system configuration data provided by the Submitter.

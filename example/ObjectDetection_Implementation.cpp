@@ -105,9 +105,9 @@ public:
         vector<BMTResult> results;
         array<int64_t, 4> inputShape = { 1, 3, 640, 640 };
 
-        //array<int64_t, 3> outputShape = { 1, 25200, 85 }; //Yolov5
+        array<int64_t, 3> outputShape = { 1, 25200, 85 }; //Yolov5
         //array<int64_t, 3> outputShape = { 1, 84, 8400 }; //Yolov5u, Yolov8, Yolov9, Yolo11, Yolo12
-        array<int64_t, 3> outputShape = { 1, 300, 6 }; //Yolov10
+        //array<int64_t, 3> outputShape = { 1, 300, 6 }; //Yolov10
 
         for (int i = 0; i < querySize; i++) {
             BMTDataType imageVec;
@@ -134,11 +134,11 @@ public:
     }
 };
 
-/*
+
 int main(int argc, char* argv[])
 {
     filesystem::path exePath = filesystem::absolute(argv[0]).parent_path();// Get the current executable file path
-    filesystem::path model_path = exePath / "Model" / "ObjectDetection" / "yolov10n_opset12.onnx";
+    filesystem::path model_path = exePath / "Model" / "ObjectDetection" / "Yolov5n_opset12.onnx";
     string modelPath = model_path.string();
     try
     {
@@ -150,4 +150,4 @@ int main(int argc, char* argv[])
     {
         cout << ex.what() << endl;
     }
-}*/
+}
