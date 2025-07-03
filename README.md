@@ -188,8 +188,8 @@ export LD_LIBRARY_PATH=$(pwd)/lib:$LD_LIBRARY_PATH
 ```
 
 **Run all commands at once (For Rebuild)**
-: using following commands in `build/` directory.
 
+- Using following commands in `build/` directory.
 ```bash
 rm -rf CMakeCache.txt CMakeFiles AI_BMT_GUI_Submitter
 cmake -G "Ninja" ..
