@@ -13,6 +13,14 @@
 #include <cstdint>//To ensure the Submitter side recognizes the uint8_t type in VariantType, this header must be included.
 #include "label_type.h"
 
+#ifdef USE_PYBIND11
+#include <pybind11/pybind11.h>
+namespace py = pybind11;
+using PythonObject = py::object;  // 실제 Python 객체를 다룸
+#else
+using PythonObject = void*;       // 그냥 placeholder (Qt에서는 필요 없음)
+#endif
+
 using namespace std;
 
 // Represents the result of the inference process for a single query.
@@ -54,12 +62,20 @@ struct EXPORT_SYMBOL Optional_Data
 // A variant can store and manage values only from a fixed set of types determined at compile time.
 // Since variant manages types statically, it can be used with minimal runtime type-checking overhead.
 // std::get<DataType>(variant) checks if the requested type matches the stored type and returns the value if they match.
-using VariantType = variant<uint8_t*, uint16_t*, uint32_t*,
-                            int8_t*,int16_t*,int32_t*,
-                            float*, // Define variant pointer types
-                            vector<uint8_t>, vector<uint16_t>, vector<uint32_t>,
-                            vector<int8_t>, vector<int16_t>, vector<int32_t>,
-                            vector<float>>; // Define variant vector types
+using VariantType = variant<
+    // Vector-based types
+    vector<uint8_t>, vector<uint16_t>, vector<uint32_t>,
+    vector<int8_t>,  vector<int16_t>,  vector<int32_t>,
+    vector<float>,
+
+    // Raw pointer types
+    uint8_t*, uint16_t*, uint32_t*,
+    int8_t*,  int16_t*,  int32_t*,
+    float*,
+
+    // Python object (e.g., numpy.ndarray, torch.Tensor, etc.)
+    PythonObject
+    >;
 
 class EXPORT_SYMBOL AI_BMT_Interface
 {
