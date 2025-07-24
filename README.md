@@ -152,7 +152,7 @@ public:
 
 - Run the following command to make the executable(AI_BMT_GUI_Submitter) can reference the libraries located in the lib folder of the current directory.
   ```bash
-  export LD_LIBRARY_PATH=$(pwd)/lib:$LD_LIBRARY_PATH
+  export LD_LIBRARY_PATH=$(pwd)/lib
   ```
 
 **4. Build the project**
@@ -182,7 +182,7 @@ sudo apt-get install libgl1 libgl1-mesa-dev
 sudo apt install unzip
 rm -rf CMakeCache.txt CMakeFiles AI_BMT_GUI_Submitter
 cmake -G "Ninja" ..
-export LD_LIBRARY_PATH=$(pwd)/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$(pwd)/lib
 cmake --build .
 ./AI_BMT_GUI_Submitter
 ```
@@ -193,7 +193,7 @@ cmake --build .
 ```bash
 rm -rf CMakeCache.txt CMakeFiles AI_BMT_GUI_Submitter
 cmake -G "Ninja" ..
-export LD_LIBRARY_PATH=$(pwd)/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$(pwd)/lib
 cmake --build .
 ./AI_BMT_GUI_Submitter
 ```
@@ -202,6 +202,6 @@ cmake --build .
 
 - Using following commands in `build/` directory.
 ```bash
-export LD_LIBRARY_PATH=$(pwd)/lib:$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH=$(pwd)/lib
 ./AI_BMT_GUI_Submitter
 ```
