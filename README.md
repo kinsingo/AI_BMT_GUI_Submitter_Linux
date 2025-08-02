@@ -144,15 +144,7 @@ public:
 
 ## Step3) Build and Start BMT
 
-**1. Open the Linux terminal**
-
-- Clone and navigate to the build directory using the following command
-  ```bash
-  git clone https://github.com/kinsingo/AI_BMT_GUI_Submitter_Linux.git
-  cd AI_BMT_GUI_Submitter_Linux/build
-  ```
-
-**2. Generate the Ninja build system using cmake**
+**1. Generate the Ninja build system using cmake**
 
 - Run the following command to remove existing cache
   ```bash
@@ -163,21 +155,21 @@ public:
   cmake -G "Ninja" ..
   ```
 
-**3. Setting Library Path for Executable in Current Directory**
+**2. Setting Library Path for Executable in Current Directory**
 
 - Run the following command to make the executable(AI_BMT_GUI_Submitter) can reference the libraries located in the lib folder of the current directory.
   ```bash
   export LD_LIBRARY_PATH=$(pwd)/lib
   ```
 
-**4. Build the project**
+**3. Build the project**
 
 - Run the following command to build the project using the build system configured by CMake in the current directory. This will compile the project and create the executable AI_BMT_GUI_Submitter.exe in the build folder.
   ```bash
   cmake --build .
   ```
 
-**5. Start Performance Analysis**
+**4. Start Performance Analysis**
 
 - Run the following command to start created excutable. When the GUI Popup, Click [Start BMT] button to start AI Performance Analysis.
   ```bash
@@ -187,8 +179,6 @@ public:
 **Run all commands at once (For Initial Build)**
 
 ```bash
-git clone https://github.com/kinsingo/AI_BMT_GUI_Submitter_Linux.git
-cd AI_BMT_GUI_Submitter_Linux/build/
 sudo apt update
 sudo apt install cmake
 sudo apt install build-essential
