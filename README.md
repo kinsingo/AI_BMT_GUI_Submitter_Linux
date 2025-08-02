@@ -148,8 +148,8 @@ public:
 
 - Clone and navigate to the build directory using the following command
   ```bash
-  git clone https://github.com/kinsingo/SNU_BMT_GUI_Submitter_Linux.git
-  cd SNU_BMT_GUI_Submitter_Windows/build
+  git clone https://github.com/kinsingo/AI_BMT_GUI_Submitter_Linux.git
+  cd AI_BMT_GUI_Submitter_Linux/build
   ```
 
 **2. Generate the Ninja build system using cmake**
@@ -187,8 +187,8 @@ public:
 **Run all commands at once (For Initial Build)**
 
 ```bash
-git clone https://github.com/kinsingo/SNU_BMT_GUI_Submitter_Linux.git
-cd SNU_BMT_GUI_Submitter_Linux/build/
+git clone https://github.com/kinsingo/AI_BMT_GUI_Submitter_Linux.git
+cd AI_BMT_GUI_Submitter_Linux/build/
 sudo apt update
 sudo apt install cmake
 sudo apt install build-essential
