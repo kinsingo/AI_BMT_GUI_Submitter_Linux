@@ -15,9 +15,8 @@ class EXPORT_SYMBOL AI_BMT_GUI_CALLER
 {
 private:
     shared_ptr<AI_BMT_Interface> interface;
-    string modelPath;
 public:
-    AI_BMT_GUI_CALLER(shared_ptr<AI_BMT_Interface> interface, string modelPath);
+    AI_BMT_GUI_CALLER(shared_ptr<AI_BMT_Interface> interface);
     int call_BMT_GUI(int argc, char *argv[]);
 };
 

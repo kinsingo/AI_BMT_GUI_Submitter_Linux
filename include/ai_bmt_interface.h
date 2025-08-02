@@ -32,9 +32,11 @@ struct EXPORT_SYMBOL BMTResult
     vector<float> classProbabilities;
 
     // Output tensor from object detection model.
-    // The vector stores raw model outputs for 25200 detection candidates.
-    // Each candidate includes 85 values: [x, y, w, h, objectness, 80 class scores].
-    // Total size must be exactly 25200 * 85 = 2,142,000 elements.
+    // This vector stores raw model outputs (e.g., bounding boxes, objectness, class scores).
+    // Expected size depends on the YOLO model variant:
+    // - YOLOv5:     25200 × 85 = 2,142,000 elements
+    // - YOLOv5u/8/9/11/12:  8400 × 84 = 705,600 elements
+    // - YOLOv10:    300 × 6 = 1,800 elements
     vector<float> objectDetectionResult;
 
     // Output tensor from emantic segmentation model.

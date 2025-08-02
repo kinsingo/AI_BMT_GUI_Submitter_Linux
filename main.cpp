@@ -74,13 +74,10 @@ public:
 
 int main(int argc, char* argv[])
 {
-    filesystem::path exePath = filesystem::absolute(argv[0]).parent_path();// Get the current executable file path
-    filesystem::path model_path = exePath / "Model" / "Classification" / "resnet50_opset10.onnx";
-    string modelPath = model_path.string();
     try
     {
         shared_ptr<AI_BMT_Interface> interface = make_shared<Virtual_Submitter_Implementation>();
-        AI_BMT_GUI_CALLER caller(interface, modelPath);
+        AI_BMT_GUI_CALLER caller(interface);
         return caller.call_BMT_GUI(argc, argv);
     }
     catch (const exception& ex)
