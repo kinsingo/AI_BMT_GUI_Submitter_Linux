@@ -1,21 +1,29 @@
 ﻿#include "ai_bmt_gui_caller.h"
 #include "ai_bmt_interface.h"
+#include <thread>
+#include <chrono>
+#include <iostream>
+#include <string>
+#include <vector>
+#include <unordered_map>
 #include <filesystem>
+// #include "example/ImageClassification_Implementaion.cpp"
+// #include "example/ImageClassification_CustomDataset_Interface_Implementation.cpp"
+// #include "example/ObjectDetection_Implementation.cpp"
+// #include "example/Segmentation_Implementation.cpp"
+// #include "example/llm_Implementation.cpp"
 
-//[Model Recommendation]
-// The loaded model should be stored as a member variable to be used in the runInference function.
-// This approach ensures that the model loading time is not included in the runInference function's execution time.
 
-//[DataType Recommendation]
-// It is recommended to return data using managed data types (e.g., vector<...>).
-// If you use unmanaged data types such as dynamic arrays (e.g., int* data = new int[...]), you must ensure that they are properly deleted at the end of runInference() definition.
-using DataType = int*;
-
-// To view detailed information on what and how to implement for "AI_BMT_Interface," navigate to its definition (e.g., in Visual Studio/VSCode: Press F12).
 class Virtual_Submitter_Implementation : public AI_BMT_Interface
 {
 public:
-    virtual void Initialize(string modelPath) override
+    virtual InterfaceType getInterfaceType() override
+    {
+        return InterfaceType::ImageClassification;
+        //return InterfaceType::ImageClassification_CustomDataset;
+    }
+
+    virtual void initialize(string modelPath) override
     {
         //load the model here
     }
@@ -36,24 +44,24 @@ public:
         return data;
     }
 
-    virtual VariantType convertToPreprocessedDataForInference(const string& imagePath) override
+    virtual VariantType preprocessVisionData(const string& imagePath) override
     {
-        DataType data  = new int[200*200];
+        int* data  = new int[200*200];
         for(int i = 0;i<200*200;i++)
              data[i]=i;
         return data;
     }
 
-    virtual vector<BMTResult> runInference(const vector<VariantType>& data) override
+    virtual vector<BMTVisionResult> inferVision(const vector<VariantType>& data) override
     {
-         vector<BMTResult> queryResult;
+        vector<BMTVisionResult> queryResult;
         const int querySize = data.size();
         for(int i =0;i<querySize;i++)
         {
-            DataType realData;
+            int* realData;
             try
             {
-                realData = get<DataType>(data[i]);//Ok
+                realData = get<int*>(data[i]);//Ok
             }
             catch (const std::bad_variant_access& e)
             {
@@ -61,7 +69,7 @@ public:
                 continue;
             }
 
-            BMTResult result;
+            BMTVisionResult result;
             vector<float> outputData(1000, 0.1);
             result.classProbabilities = outputData;
             queryResult.push_back(result);
@@ -76,9 +84,29 @@ int main(int argc, char* argv[])
 {
     try
     {
+		// -- For Single Task --
         shared_ptr<AI_BMT_Interface> interface = make_shared<Virtual_Submitter_Implementation>();
-        AI_BMT_GUI_CALLER caller(interface);
-        return caller.call_BMT_GUI(argc, argv);
+        //shared_ptr<AI_BMT_Interface> interface = make_shared<ImageClassification_Interface_Implementation>(); 
+        //shared_ptr<AI_BMT_Interface> interface = make_shared<ImageClassification_CustomDataset_Interface_Implementation>();
+        //shared_ptr<AI_BMT_Interface> interface = make_shared<ObjectDetection_Interface_Implementation>(); 
+        //shared_ptr<AI_BMT_Interface> interface = make_shared<ObjectDetection_CustomDataset_Interface_Implementation>();
+        //shared_ptr<AI_BMT_Interface> interface = make_shared<Segmentation_Interface_Implementation>(); 
+        //shared_ptr<AI_BMT_Interface> interface = make_shared<Segmentation_CustomDataset_Interface_Implementation>(); 
+        //shared_ptr<AI_BMT_Interface> interface = make_shared<LLM_Interface_Implementation>();
+        return AI_BMT_GUI_CALLER::call_BMT_GUI_For_Single_Task(argc, argv, interface);
+
+		// -- For Multi-Domain Tasks --
+        /*
+        vector<shared_ptr<AI_BMT_Interface>> interfaceVector
+        {
+            make_shared<ImageClassification_Interface_Implementation>(),
+            make_shared<ObjectDetection_Interface_Implementation>(),
+            make_shared<Segmentation_Interface_Implementation>(),
+            make_shared<LLM_Interface_Implementation>(),
+		}; 
+        return AI_BMT_GUI_CALLER::call_BMT_GUI_For_Multiple_Tasks(argc, argv, interfaceVector);
+        */
+        
     }
     catch (const exception& ex)
     {

@@ -16,15 +16,15 @@
 #ifdef USE_PYBIND11
 #include <pybind11/pybind11.h>
 namespace py = pybind11;
-using PythonObject = py::object;  // 실제 Python 객체를 다룸
+using PythonObject = py::object; 
 #else
-using PythonObject = void*;       // 그냥 placeholder (Qt에서는 필요 없음)
+using PythonObject = void*;      
 #endif
 
 using namespace std;
 
 // Represents the result of the inference process for a single query.
-struct EXPORT_SYMBOL BMTResult
+struct EXPORT_SYMBOL BMTVisionResult
 {
     // Output scores for 1000 ImageNet classes from the classification model.
     // Each element represents the probability or confidence score for a class.
@@ -39,10 +39,16 @@ struct EXPORT_SYMBOL BMTResult
     // - YOLOv10:    300 × 6 = 1,800 elements
     vector<float> objectDetectionResult;
 
-    // Output tensor from emantic segmentation model.
+    // Output tensor from semantic segmentation model.
     // Each value represents the score (e.g., logits or probabilities) of a class at a specific pixel location..
     // Total size must be exactly 21(Classes) x 520(Height) x 520(Width) = 5,678,400 elements.
     vector<float> segmentationResult;
+};
+
+struct EXPORT_SYMBOL BMTLLMResult
+{
+    vector<float> rawOutput;
+    vector<int64_t> rawOutputShape;
 };
 
 // Stores optional system configuration data provided by the Submitter.
@@ -61,6 +67,12 @@ struct EXPORT_SYMBOL Optional_Data
     string operating_system; // e.g., Ubuntu 20.04.5 LTS
 };
 
+struct LLMPreprocessedInput {
+    vector<int64_t> input_ids;
+    vector<int64_t> attention_mask;
+    vector<int64_t> token_type_ids;
+};
+
 // A variant can store and manage values only from a fixed set of types determined at compile time.
 // Since variant manages types statically, it can be used with minimal runtime type-checking overhead.
 // std::get<DataType>(variant) checks if the requested type matches the stored type and returns the value if they match.
@@ -75,19 +87,32 @@ using VariantType = variant<
     int8_t*,  int16_t*,  int32_t*,
     float*,
 
+    //LLM
+    LLMPreprocessedInput,
+
     // Python object (e.g., numpy.ndarray, torch.Tensor, etc.)
     PythonObject
     >;
+
+
+enum class InterfaceType
+{
+    ImageClassification,
+    ImageClassification_CustomDataset,
+    ObjectDetection,
+    ObjectDetection_CustomDataset,
+    SemanticSegmentation,
+    SemanticSegmentation_CustomDataset,
+    LLM,
+};
 
 class EXPORT_SYMBOL AI_BMT_Interface
 {
 public:
    virtual ~AI_BMT_Interface(){}
 
-   // This is not mandatory but can be implemented if needed.
-   // The virtual function getOptionalData() returns an Optional_Data object,
-   // which includes fields like CPU_Type and Accelerator_Type.
-   // By default, these fields are initialized as empty strings.
+    // Optional: override to provide system metadata.
+    // Returned values will be stored in the database (used for benchmarking context).
    virtual Optional_Data getOptionalData()
    {
        Optional_Data data;
@@ -104,19 +129,24 @@ public:
        return data;
    }
 
-   // It is recommended to use this instead of a constructor,
-   // as it allows handling additional errors that cannot be managed within the constructor.
-   // The Initialize function is guaranteed to be called before convertToData and runInference are executed.
+   // return the implemented interface task type. 
+   virtual InterfaceType getInterfaceType() = 0;
+
+   // This initialize(..) function is guaranteed to be called before convertToData and runInference are executed.
    // The submitter can load the model using the provided modelPath
-   virtual void Initialize(string modelPath) = 0;
+   virtual void initialize(string modelPath) = 0;
 
-   // Performs preprocessing before AI inference to convert data into the format required by the AI Processing Unit.
-   // This method prepares model input data and is excluded from latency and throughput performance measurements.
-   // The converted data is loaded into RAM prior to invoking the runInference(..) method.
-   virtual VariantType convertToPreprocessedDataForInference(const string& imagePath) = 0;
+   // Vision tasks: preprocessing & inference
+   // - preprocessVisionData: convert raw image file into model input format
+   // - inferVision: run inference on preprocessed data and return results
+   virtual VariantType preprocessVisionData(const string& imagePath) {throw runtime_error("preprocessVisionData(..) should be implemented for vision task");}
+   virtual vector<BMTVisionResult> inferVision(const vector<VariantType>& data) {throw runtime_error("inferVision(..) should be implemented for vision task");}
 
-   // Returns the final BMTResult value of the query required for performance evaluation in the App.
-   virtual vector<BMTResult> runInference(const vector<VariantType>& data) = 0;
+   // LLM tasks: preprocessing & inference
+   // - preprocessLLMData: convert raw text input into model input format
+   // - inferLLM: run inference on preprocessed data and return results
+   virtual VariantType preprocessLLMData(const LLMPreprocessedInput& llmData) {throw runtime_error("LLMPreprocessedInput(..) should be implemented for llm task");}
+   virtual vector<BMTLLMResult> inferLLM(const vector<VariantType>& data) {throw runtime_error("inferLLM(..) should be implemented for llm task");}
 };
 
 #endif // AI_BMT_INTERFACE_H

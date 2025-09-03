@@ -15,17 +15,9 @@ using namespace std;
 using namespace cv;
 using namespace Ort;
 
-//[Model Recommendation]
-// The loaded model should be stored as a member variable to be used in the runInference function.
-// This approach ensures that the model loading time is not included in the runInference function's execution time.
 
-//[DataType Recommendation]
-// It is recommended to return data using managed data types (e.g., vector<...>).
-// If you use unmanaged data types such as dynamic arrays (e.g., int* data = new int[...]), you must ensure that they are properly deleted at the end of runInference() definition.
-using BMTDataType = vector<float>;
 
-// To view detailed information on what and how to implement for "AI_BMT_Interface," navigate to its definition (e.g., in Visual Studio/VSCode: Press F12).
-class OnjectDetection_Interface_Implementation : public AI_BMT_Interface
+class ObjectDetection_Interface_Implementation : public AI_BMT_Interface
 {
 private:
     Env env;
@@ -36,7 +28,12 @@ private:
     MemoryInfo memory_info = Ort::MemoryInfo::CreateCpu(OrtDeviceAllocator, OrtMemTypeCPU);
 
 public:
-    virtual void Initialize(string modelPath) override
+    virtual InterfaceType getInterfaceType() override
+    {
+        return InterfaceType::ObjectDetection;
+    }
+
+    virtual void initialize(string modelPath) override
     {
         //session initializer
         SessionOptions sessionOptions;
@@ -71,7 +68,7 @@ public:
         return data;
     }
 
-    virtual VariantType convertToPreprocessedDataForInference(const string& imagePath) override
+    virtual VariantType preprocessVisionData(const string& imagePath) override
     {
         // Load padded image
         Mat image = imread(imagePath);
@@ -88,7 +85,7 @@ public:
         //HWC → CHW
         vector<Mat> chw;
         split(floatImg, chw);
-        BMTDataType inputTensorValues;
+        vector<float> inputTensorValues;
         for (int c = 0; c < 3; ++c) {
             inputTensorValues.insert(inputTensorValues.end(),
                 (float*)chw[c].datastart, (float*)chw[c].dataend);
@@ -96,13 +93,11 @@ public:
         return inputTensorValues;
     }
 
-    virtual vector<BMTResult> runInference(const vector<VariantType>& data) override
+    virtual vector<BMTVisionResult> inferVision(const vector<VariantType>& data) override
     {
-        cout << "runInference" << endl;
-
         //onnx option setting
         const int querySize = data.size();
-        vector<BMTResult> results;
+        vector<BMTVisionResult> results;
         array<int64_t, 4> inputShape = { 1, 3, 640, 640 };
 
         array<int64_t, 3> outputShape = { 1, 25200, 85 }; //Yolov5
@@ -110,9 +105,9 @@ public:
         //array<int64_t, 3> outputShape = { 1, 300, 6 }; //Yolov10
 
         for (int i = 0; i < querySize; i++) {
-            BMTDataType imageVec;
+            vector<float> imageVec;
             try {
-                imageVec = get<BMTDataType>(data[i]);
+                imageVec = get<vector<float>>(data[i]);
             }
             catch (const std::bad_variant_access& e) {
                 string errorMessage = "Error: bad_variant_access at index " + to_string(i) + ": " + e.what();
@@ -126,7 +121,7 @@ public:
             session->Run(runOptions, inputNames.data(), &inputTensor, 1, outputNames.data(), &outputTensor, 1);
 
             // Update results
-            BMTResult result;
+            BMTVisionResult result;
             result.objectDetectionResult = outputData;
             results.push_back(result);
         }
@@ -135,16 +130,11 @@ public:
 };
 
 
-// int main(int argc, char* argv[])
-// {
-//     try
-//     {
-//         shared_ptr<AI_BMT_Interface> interface = make_shared<OnjectDetection_Interface_Implementation>();
-//         AI_BMT_GUI_CALLER caller(interface);
-//         return caller.call_BMT_GUI(argc, argv);
-//     }
-//     catch (const exception& ex)
-//     {
-//         cout << ex.what() << endl;
-//     }
-// }
+class ObjectDetection_CustomDataset_Interface_Implementation : public ObjectDetection_Interface_Implementation
+{
+public:
+    virtual InterfaceType getInterfaceType() override
+    {
+        return InterfaceType::ObjectDetection_CustomDataset;
+    }
+};

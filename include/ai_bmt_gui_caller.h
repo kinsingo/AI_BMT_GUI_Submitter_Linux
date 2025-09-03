@@ -14,10 +14,11 @@ using namespace std;
 class EXPORT_SYMBOL AI_BMT_GUI_CALLER
 {
 private:
-    shared_ptr<AI_BMT_Interface> interface;
+    static void initialize(int argc, char *argv[]);
+
 public:
-    AI_BMT_GUI_CALLER(shared_ptr<AI_BMT_Interface> interface);
-    int call_BMT_GUI(int argc, char *argv[]);
+    static int call_BMT_GUI_For_Single_Task(int argc, char *argv[], shared_ptr<AI_BMT_Interface> interface);
+    static int call_BMT_GUI_For_Multiple_Tasks(int argc, char *argv[], vector<shared_ptr<AI_BMT_Interface>> interface);
 };
 
 #endif // AI_BMT_GUI_CALLER_H
