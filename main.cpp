@@ -13,7 +13,6 @@
 // #include "example/Segmentation_Implementation.cpp"
 // #include "example/llm_Implementation.cpp"
 
-
 class Virtual_Submitter_Implementation : public AI_BMT_Interface
 {
 public:

@@ -71,20 +71,24 @@ struct LLMPreprocessedInput {
     vector<int64_t> input_ids;
     vector<int64_t> attention_mask;
     vector<int64_t> token_type_ids;
+    int64_t N;
+    int64_t S;
 };
+
+
 
 // A variant can store and manage values only from a fixed set of types determined at compile time.
 // Since variant manages types statically, it can be used with minimal runtime type-checking overhead.
 // std::get<DataType>(variant) checks if the requested type matches the stored type and returns the value if they match.
 using VariantType = variant<
     // Vector-based types
-    vector<uint8_t>, vector<uint16_t>, vector<uint32_t>,
-    vector<int8_t>,  vector<int16_t>,  vector<int32_t>,
+    vector<uint8_t>, vector<uint16_t>, vector<uint32_t>, vector<int64_t>,
+    vector<int8_t>,  vector<int16_t>,  vector<int32_t>, vector<int64_t>,
     vector<float>,
 
     // Raw pointer types
-    uint8_t*, uint16_t*, uint32_t*,
-    int8_t*,  int16_t*,  int32_t*,
+    uint8_t*, uint16_t*, uint32_t*, uint64_t*,
+    int8_t*,  int16_t*,  int32_t*, int64_t*,
     float*,
 
     //LLM
@@ -103,7 +107,16 @@ enum class InterfaceType
     ObjectDetection_CustomDataset,
     SemanticSegmentation,
     SemanticSegmentation_CustomDataset,
-    LLM,
+
+    LLM_Bert_GLUE,
+
+    LLM_GPT2_Hellaswag,
+    LLM_OPT_Hellaswag,
+    LLM_QWEN_Hellaswag,
+
+    LLM_GPT2_MMLU,
+    LLM_OPT_MMLU,
+    LLM_QWEN_MMLU,
 };
 
 class EXPORT_SYMBOL AI_BMT_Interface

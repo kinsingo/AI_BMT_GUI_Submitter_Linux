@@ -1,4 +1,4 @@
-> **Last Updated:** 2025-09-03 (Added LLM Tasks, Multi-Domain Tasks, and Custom Dataset Evaluation Modes)
+> **Last Updated:** 2025-10-06 (Added MMLU, HellaSwag LLM Tasks)
 
 ## Environment
 1.  ISA(Instruction Set Architecture) : AMD64(x86_64)

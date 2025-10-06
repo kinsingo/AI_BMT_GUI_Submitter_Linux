@@ -19,23 +19,33 @@ private:
     RunOptions runOptions;
     shared_ptr<Session> session;
     MemoryInfo memory_info = Ort::MemoryInfo::CreateCpu(OrtDeviceAllocator, OrtMemTypeCPU);
-
     vector<string> inputNameStrs;
     vector<const char*> inputNames;
     vector<string> outputNameStrs;
     vector<const char*> outputNames;
-
     bool modelHasTokenType = false;
     bool modelHasAttnMask = false;
 
 public:
     virtual InterfaceType getInterfaceType() override
     {
-        return InterfaceType::LLM;
+        //return InterfaceType::LLM_GPT2_MMLU;
+        //return InterfaceType::LLM_OPT_MMLU;
+		//return InterfaceType::LLM_GPT2_Hellaswag; // e.g., GPT2-based model for Hellaswag
+        //return InterfaceType::LLM_OPT_Hellaswag; // e.g., OPT-based model for Hellaswag
+		return InterfaceType::LLM_Bert_GLUE; // e.g., BERT-based model for GLUE tasks
     }
 
     virtual void initialize(string modelPath) override
     {
+        // Reset state to avoid residual input/output names from previous sessions
+        inputNameStrs.clear();
+        inputNames.clear();
+        outputNameStrs.clear();
+        outputNames.clear();
+        modelHasTokenType = false;
+        modelHasAttnMask = false;
+
         //session initializer
         SessionOptions sessionOptions;
         sessionOptions.SetExecutionMode(ExecutionMode::ORT_SEQUENTIAL);
@@ -46,27 +56,25 @@ public:
         // Get input and output names
         AllocatorWithDefaultOptions allocator;
 
-        // ---- 입력 이름들 모두 확보 ----
+        // Input names
         size_t inCount = session->GetInputCount();
         inputNameStrs.reserve(inCount);
         for (size_t i = 0; i < inCount; ++i) {
             auto name = session->GetInputNameAllocated(i, allocator);
             inputNameStrs.emplace_back(name.get());
         }
-        inputNames.clear();
         for (auto& s : inputNameStrs) inputNames.push_back(s.c_str());
 
-        // ---- 출력 이름들 모두 확보 (보통 1개) ----
+        // Output names
         size_t outCount = session->GetOutputCount();
         outputNameStrs.reserve(outCount);
         for (size_t i = 0; i < outCount; ++i) {
             auto name = session->GetOutputNameAllocated(i, allocator);
             outputNameStrs.emplace_back(name.get());
         }
-        outputNames.clear();
         for (auto& s : outputNameStrs) outputNames.push_back(s.c_str());
 
-        // ---- 입력 시그니처 검사 ----
+        // Check if the model has optional inputs
         modelHasTokenType = std::find(inputNameStrs.begin(), inputNameStrs.end(), "token_type_ids") != inputNameStrs.end();
         modelHasAttnMask = std::find(inputNameStrs.begin(), inputNameStrs.end(), "attention_mask") != inputNameStrs.end();
     }
@@ -98,41 +106,37 @@ public:
 
     virtual vector<BMTLLMResult> inferLLM(const vector<VariantType>& data) override
     {
-        std::vector<BMTLLMResult> results;
+        vector<BMTLLMResult> results;
 
         for (size_t i = 0; i < data.size(); ++i) {
             LLMPreprocessedInput in;
             try {
-                in = std::get<LLMPreprocessedInput>(data[i]);
+                in = get<LLMPreprocessedInput>(data[i]);
             }
-            catch (const std::bad_variant_access& e) {
-                cerr << "Error: bad_variant_access at index " << i << ". Reason: " << e.what() << endl;
+            catch (const bad_variant_access& e) {
+                cerr << "[inferLLM] Invalid VariantType at index " << i << endl;
                 continue;
             }
 
-            const int64_t B = 1;
-            const int64_t S = static_cast<int64_t>(in.input_ids.size());
-            const std::array<int64_t, 2> shape{ B, S };
-  
-            // feed 구성 (모델 선언 순서대로)
-            std::vector<Ort::Value> feedVals;
+            const array<int64_t, 2> shape{ in.N, in.S };
+            vector<Ort::Value> feedVals;
             for (auto nm : inputNames) {
-                std::string s(nm);
+                string s(nm);
                 if (s == "input_ids")
                     feedVals.push_back(Ort::Value::CreateTensor<int64_t>(memory_info, const_cast<int64_t*>(in.input_ids.data()), in.input_ids.size(), shape.data(), shape.size()));
                 else if (s == "attention_mask" && modelHasAttnMask) 
-                    feedVals.push_back(Ort::Value::CreateTensor<int64_t>(memory_info, const_cast<int64_t*>(in.attention_mask.data()), S, shape.data(), shape.size()));
+                    feedVals.push_back(Ort::Value::CreateTensor<int64_t>(memory_info, const_cast<int64_t*>(in.attention_mask.data()), in.attention_mask.size(), shape.data(), shape.size()));
                 else if (s == "token_type_ids" && modelHasTokenType) 
-                    feedVals.push_back(Ort::Value::CreateTensor<int64_t>(memory_info, const_cast<int64_t*>(in.token_type_ids.data()), S, shape.data(), shape.size()));
-                else 
-                    std::cerr << "[runInference] Skip input name: " << s << std::endl;
+                    feedVals.push_back(Ort::Value::CreateTensor<int64_t>(memory_info, const_cast<int64_t*>(in.token_type_ids.data()), in.token_type_ids.size(), shape.data(), shape.size()));
+                else if (s == "token_type_ids") {
+                    cerr << "[inferLLM] token_type_ids ignored (model does not require it)." << std::endl;
+                }
             }
 
             auto outs = session->Run(runOptions,
                 inputNames.data(), feedVals.data(), feedVals.size(),
                 outputNames.data(), outputNames.size());
 
-            // 첫 번째 출력 텐서만 원시 복사
             BMTLLMResult r;
             auto& out0 = outs.front();
             auto info = out0.GetTensorTypeAndShapeInfo();
@@ -148,17 +152,3 @@ public:
         return results;
     }
 };
-
-/*
-int main(int argc, char* argv[])
-{
-    try
-    {
-        shared_ptr<AI_BMT_Interface> interface = make_shared<LLM_Interface_Implementation>();
-        return AI_BMT_GUI_CALLER::call_BMT_GUI_For_Single_Task(argc, argv, interface);
-    }
-    catch (const exception& ex)
-    {
-        cout << ex.what() << endl;
-    }
-}*/
