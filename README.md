@@ -1,4 +1,4 @@
-> **Last Updated:** 2025-10-06 (Added MMLU, HellaSwag LLM Tasks)
+> **Last Updated:** 2025-10-31
 
 ## Environment
 1.  ISA(Instruction Set Architecture) : AMD64(x86_64)
