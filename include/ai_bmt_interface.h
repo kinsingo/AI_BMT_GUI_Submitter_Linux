@@ -98,7 +98,6 @@ using VariantType = variant<
     PythonObject
     >;
 
-
 enum class InterfaceType
 {
     ImageClassification,
@@ -110,13 +109,13 @@ enum class InterfaceType
 
     LLM_Bert_GLUE,
 
-    LLM_GPT2_Hellaswag,
-    LLM_OPT_Hellaswag,
     LLM_QWEN_Hellaswag,
+    LLM_Gemma_Hellaswag, //251206
+    LLM_Llama_Hellaswag, //251206
 
-    LLM_GPT2_MMLU,
-    LLM_OPT_MMLU,
     LLM_QWEN_MMLU,
+    LLM_Gemma_MMLU,//251206
+    LLM_Llama_MMLU,//251206
 };
 
 class EXPORT_SYMBOL AI_BMT_Interface
