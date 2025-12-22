@@ -1,4 +1,4 @@
-> **Last Updated:** 2025-12-06 (Version 2.1)
+> **Last Updated:** 2025-12-23 (Version 2.1)
 
 ## Environment
 1.  ISA(Instruction Set Architecture) : AMD64(x86_64)
@@ -67,6 +67,12 @@ public:
    // - inferLLM: run inference on preprocessed data and return results
    virtual VariantType preprocessLLMData(const LLMPreprocessedInput& llmData) {throw runtime_error("LLMPreprocessedInput(..) should be implemented for llm task");}
    virtual vector<BMTLLMResult> inferLLM(const vector<VariantType>& data) {throw runtime_error("inferLLM(..) should be implemented for llm task");}
+
+   // LLM MMLU tasks: first token generation for TTFT measurement
+   // - inferFirstToken: generate only the first token (AI-BMT will measure the time internally)
+   // - Returns void (we only measure TTFT, don't care about the actual first token output)
+   // - Only used for MMLU tasks that require TTFT measurement
+   virtual void inferFirstToken(const VariantType& data) {throw runtime_error("inferFirstToken(..) should be implemented for MMLU task");}
 };
 
 #endif // AI_BMT_INTERFACE_H

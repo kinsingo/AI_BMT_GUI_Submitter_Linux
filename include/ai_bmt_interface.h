@@ -109,10 +109,6 @@ enum class InterfaceType
 
     LLM_Bert_GLUE,
 
-    LLM_QWEN_Hellaswag,
-    LLM_Gemma_Hellaswag, //251206
-    LLM_Llama_Hellaswag, //251206
-
     LLM_QWEN_MMLU,
     LLM_Gemma_MMLU,//251206
     LLM_Llama_MMLU,//251206
@@ -159,6 +155,12 @@ public:
    // - inferLLM: run inference on preprocessed data and return results
    virtual VariantType preprocessLLMData(const LLMPreprocessedInput& llmData) {throw runtime_error("LLMPreprocessedInput(..) should be implemented for llm task");}
    virtual vector<BMTLLMResult> inferLLM(const vector<VariantType>& data) {throw runtime_error("inferLLM(..) should be implemented for llm task");}
+   
+   // LLM MMLU tasks: first token generation for TTFT measurement
+   // - inferFirstToken: generate only the first token (AI-BMT will measure the time internally)
+   // - Returns void (we only measure TTFT, don't care about the actual first token output)
+   // - Only used for MMLU tasks that require TTFT measurement
+   virtual void inferFirstToken(const VariantType& data) {throw runtime_error("inferFirstToken(..) should be implemented for MMLU task");}
 };
 
 #endif // AI_BMT_INTERFACE_H
