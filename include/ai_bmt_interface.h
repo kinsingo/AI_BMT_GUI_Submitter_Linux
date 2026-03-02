@@ -114,6 +114,13 @@ enum class InterfaceType
     LLM_Llama_MMLU,//251206
 };
 
+enum class PowerDeviceType{
+    None,
+    NvidiaGPU,
+    JetsonSoC,
+    AppleSoC,
+};
+
 class EXPORT_SYMBOL AI_BMT_Interface
 {
 public:
@@ -139,6 +146,9 @@ public:
 
    // return the implemented interface task type. 
    virtual InterfaceType getInterfaceType() = 0;
+
+   // Power measurement selection (default: do not measure)
+   virtual PowerDeviceType getPowerDeviceType() { return PowerDeviceType::None; }
 
    // This initialize(..) function is guaranteed to be called before convertToData and runInference are executed.
    // The submitter can load the model using the provided modelPath

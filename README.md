@@ -1,4 +1,4 @@
-> **Last Updated:** 2026-02-09 (Version 2.2)
+> **Last Updated:** 2026-03-03 (Version 2.3)
 
 ## Environment
 1.  ISA(Instruction Set Architecture) : AMD64(x86_64)
@@ -55,6 +55,9 @@ public:
    // This initialize(..) function is guaranteed to be called before preprocess(..) and infer(..) are executed.
    // The submitter can load the model using the provided modelPath
    virtual void initialize(string modelPath) = 0;
+
+   // Power measurement selection (default: do not measure)
+   virtual PowerDeviceType getPowerDeviceType() { return PowerDeviceType::None; }
 
    // Vision tasks: preprocessing & inference
    // - preprocessVisionData: convert raw image file into model input format

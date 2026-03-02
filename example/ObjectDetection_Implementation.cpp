@@ -16,7 +16,6 @@ using namespace cv;
 using namespace Ort;
 
 
-
 class ObjectDetection_Interface_Implementation : public AI_BMT_Interface
 {
 private:
@@ -31,6 +30,11 @@ public:
     virtual InterfaceType getInterfaceType() override
     {
         return InterfaceType::ObjectDetection;
+    }
+
+    virtual PowerDeviceType getPowerDeviceType() override
+    { 
+        return PowerDeviceType::None; 
     }
 
     virtual void initialize(string modelPath) override
