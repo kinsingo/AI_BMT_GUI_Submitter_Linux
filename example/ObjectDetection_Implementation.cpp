@@ -104,7 +104,8 @@ public:
         vector<BMTVisionResult> results;
         array<int64_t, 4> inputShape = { 1, 3, 640, 640 };
 
-        array<int64_t, 3> outputShape = { 1, 25200, 85 }; //Yolov5
+        array<int64_t, 3> outputShape = { 1, 25200, 85 }; //Yolov5, Yolov7
+        //array<int64_t, 3> outputShape = { 1, 8400, 85 }; //Yolov6
         //array<int64_t, 3> outputShape = { 1, 84, 8400 }; //Yolov5u, Yolov8, Yolov9, Yolo11, Yolo12
         //array<int64_t, 3> outputShape = { 1, 300, 6 }; //Yolov10
 
