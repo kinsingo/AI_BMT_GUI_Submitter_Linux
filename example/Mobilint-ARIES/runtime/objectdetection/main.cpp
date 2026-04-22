@@ -1,3 +1,5 @@
+//Runtime Version v1.2.0
+
 #include "ai_bmt_gui_caller.h"
 #include "ai_bmt_interface.h"
 #include <thread>
@@ -383,7 +385,7 @@ int main(int argc, char *argv[])
 {
     try
     {
-        std::cout << "Runtime Version : " << mobilint::getQbRuntimeVersion() << "\n";//This RT version should be v1.2.0
+        std::cout << "Runtime Version : " << mobilint::getQbRuntimeVersion() << "\n";
         auto interface = std::make_shared<ObjectDetection_Implementation>(ExecuteMode::Single);
         return AI_BMT_GUI_CALLER::call_BMT_GUI_For_Single_Task(argc, argv, interface);
     }
