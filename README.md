@@ -1,4 +1,4 @@
-> **Last Updated:** 2026-04-06 (Version 2.7)
+> **Last Updated:** 2026-05-09 (Version 2.8)
 
 ## Environment
 1.  ISA(Instruction Set Architecture) : AMD64(x86_64)
